@@ -9,9 +9,12 @@ import java.util.List;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private List<Employee> employeeBook = new ArrayList<>();
+    private List<Employee> employeeBook;
     private final int employeeBookLimit = 10;
 
+    public EmployeeServiceImpl(List<Employee> employeeBook) {
+        this.employeeBook = employeeBook;
+    }
     @Override
     public Employee addEmployee(String firstName, String lastName) {
         if (employeeBook.size() >= employeeBookLimit) {
