@@ -33,9 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee removeEmployee(String firstName, String lastName) {
 
         if (employeeBook.containsKey(firstName + lastName)) {
-            Employee employeeForReturn = new Employee(firstName, lastName);
-            employeeBook.remove(firstName + lastName);
-            return employeeForReturn;
+             return employeeBook.remove(firstName + lastName);
         }
         throw new EmployeeNotFoundException("EmployeeNotFound");
     }
