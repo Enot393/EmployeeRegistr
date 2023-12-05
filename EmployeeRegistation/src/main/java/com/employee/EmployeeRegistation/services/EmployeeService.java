@@ -1,4 +1,6 @@
-package com.employee.EmployeeRegistation;
+package com.employee.EmployeeRegistation.services;
+
+import com.employee.EmployeeRegistation.Employee;
 
 public interface EmployeeService {
     Employee addEmployee(String firstName, String lastName);

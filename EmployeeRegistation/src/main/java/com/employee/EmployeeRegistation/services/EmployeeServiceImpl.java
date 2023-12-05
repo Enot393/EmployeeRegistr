@@ -1,5 +1,6 @@
-package com.employee.EmployeeRegistation;
+package com.employee.EmployeeRegistation.services;
 
+import com.employee.EmployeeRegistation.Employee;
 import com.employee.EmployeeRegistation.exceptions.*;
 import org.springframework.stereotype.Service;
 

@@ -1,5 +1,7 @@
-package com.employee.EmployeeRegistation;
+package com.employee.EmployeeRegistation.controllers;
 
+import com.employee.EmployeeRegistation.Employee;
+import com.employee.EmployeeRegistation.services.EmployeeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
