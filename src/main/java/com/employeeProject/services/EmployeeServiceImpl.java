@@ -54,6 +54,11 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
+    public List<Employee> findAll() {
+        return new ArrayList<>(employeeBook.values());
+    }
+
+    @Override
     public List<Employee> getAllEmployees() {
         return new ArrayList<>(employeeBook.values());
     }

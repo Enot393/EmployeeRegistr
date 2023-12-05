@@ -19,7 +19,8 @@ public class DepartmentServiceImpl implements IDepartmentService {
 
     @Override
     public Employee maxSalaryOfDepartment(Integer departmentId) {
-        return getAllEmployeesOfDepartment(departmentId).stream()
+        return employeeService.findAll().stream()
+                .filter(e -> e.getDepartmentId() == departmentId)
                 .max(Comparator.comparingDouble(Employee::getSalary))
                 .orElseThrow(() -> new EmployeeNotFoundException("DepartmentId is uncorrected"));
     }
