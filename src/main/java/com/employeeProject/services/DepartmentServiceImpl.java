@@ -46,16 +46,19 @@ public class DepartmentServiceImpl implements IDepartmentService {
 
     @Override
     public List<Employee> getAllEmployees(Integer departmentId) {
-        if (departmentId != null) {
-            List<Employee> employeesOfDepartment = employeeService.getAllEmployees().stream()
-                    .filter(e -> e.getDepartmentId() == departmentId)
-                    .toList();
+        if (departmentId == null) {
+            return employeeService.getAllEmployees();
+        }
+         List<Employee> employeesOfDepartment = getEmployeeList(departmentId);
             if (employeesOfDepartment.isEmpty()) {
                 throw new EmployeeNotFoundException("DepartmentId is uncorrected");
             }
             return employeesOfDepartment;
-        } else {
-            return employeeService.getAllEmployees();
-        }
+    }
+
+    private List<Employee> getEmployeeList(Integer departmentId) {
+        return employeeService.getAllEmployees().stream()
+                    .filter(e -> e.getDepartmentId() == departmentId)
+                    .toList();
     }
 }
