@@ -11,6 +11,4 @@ public interface IEmployeeService {
 
     Employee searchEmployee(String firstName, String lastName);
     List<Employee> getAllEmployees();
-    List<Employee> findAll();
-
 }

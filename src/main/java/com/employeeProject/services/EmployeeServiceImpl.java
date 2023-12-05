@@ -16,11 +16,6 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     public EmployeeServiceImpl(Map<String, Employee> employeeBook) {
         this.employeeBook = employeeBook;
-        employeeBook.put("SK1", new Employee("S", "K1",1, 10000));
-        employeeBook.put("SK2", new Employee("S", "K2",1, 20000));
-        employeeBook.put("SK3", new Employee("S", "K3",1, 30000));
-        employeeBook.put("SK4", new Employee("S", "K4",2, 40000));
-        employeeBook.put("SK5", new Employee("S", "K",2, 50000));
     }
 
     @Override
@@ -51,11 +46,6 @@ public class EmployeeServiceImpl implements IEmployeeService {
             return employeeBook.get(firstName + lastName);
         }
         throw new EmployeeNotFoundException("EmployeeNotFound");
-    }
-
-    @Override
-    public List<Employee> findAll() {
-        return new ArrayList<>(employeeBook.values());
     }
 
     @Override
