@@ -19,20 +19,20 @@ public class DepartmentServiceImpl implements IDepartmentService {
 
     @Override
     public Employee maxSalaryOfDepartment(Integer departmentId) {
-        return getAllEmployees(departmentId).stream()
+        return getAllEmployeesOfDepartment(departmentId).stream()
                 .max(Comparator.comparingDouble(Employee::getSalary))
                 .orElseThrow(() -> new EmployeeNotFoundException("DepartmentId is uncorrected"));
     }
 
     @Override
     public Employee minSalaryOfDepartment(Integer departmentId) {
-        return getAllEmployees(departmentId).stream()
+        return getAllEmployeesOfDepartment(departmentId).stream()
                 .min(Comparator.comparingDouble(Employee::getSalary))
                 .orElseThrow(() -> new EmployeeNotFoundException("DepartmentId is uncorrected"));
     }
 
     @Override
-    public List<Employee> getAllEmployees(Integer departmentId) {
+    public List<Employee> getAllEmployeesOfDepartment(Integer departmentId) {
         if (departmentId == null) {
             return employeeService.getAllEmployees();
         }

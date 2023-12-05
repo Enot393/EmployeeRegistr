@@ -9,5 +9,5 @@ public interface IDepartmentService {
 
     Employee minSalaryOfDepartment(Integer departmentId);
 
-    List<Employee> getAllEmployees(Integer departmentId);
+    List<Employee> getAllEmployeesOfDepartment(Integer departmentId);
 }
