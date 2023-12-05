@@ -19,29 +19,16 @@ public class DepartmentServiceImpl implements IDepartmentService {
 
     @Override
     public Employee maxSalaryOfDepartment(Integer departmentId) {
-        Double maxSalary = getAllEmployees(departmentId).stream()
-                .map(e -> e.getSalary())
-                .max(Comparator.naturalOrder())
-                .orElseThrow(() -> new EmployeeNotFoundException("DepartmentId is uncorrected"));
-
         return getAllEmployees(departmentId).stream()
-                .filter(e -> e.getSalary() == maxSalary)
-                .findFirst().
-                get();
-
+                .max(Comparator.comparingDouble(Employee::getSalary))
+                .orElseThrow(() -> new EmployeeNotFoundException("DepartmentId is uncorrected"));
     }
 
     @Override
     public Employee minSalaryOfDepartment(Integer departmentId) {
-        Double minSalary = getAllEmployees(departmentId).stream()
-                .map(Employee::getSalary)
-                .min(Comparator.naturalOrder())
-                .orElseThrow(() -> new EmployeeNotFoundException("DepartmentId is uncorrected"));
-
         return getAllEmployees(departmentId).stream()
-                .filter(e -> e.getSalary() == minSalary)
-                .findFirst().
-                get();
+                .min(Comparator.comparingDouble(Employee::getSalary))
+                .orElseThrow(() -> new EmployeeNotFoundException("DepartmentId is uncorrected"));
     }
 
     @Override
