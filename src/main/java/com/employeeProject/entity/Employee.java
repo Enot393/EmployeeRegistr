@@ -1,14 +1,18 @@
-package com.employee.EmployeeRegistation;
+package com.employeeProject.entity;
 
 import java.util.Objects;
 
 public class Employee {
-    private String firstName;
-    private String lastName;
+    private final String firstName;
+    private final String lastName;
+    private int departmentId;
+    private double salary;
 
-    public Employee(String firstName, String lastName) {
+    public Employee(String firstName, String lastName, int departmentId, double salary) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.departmentId = departmentId;
+        this.salary = salary;
     }
 
     public String getFirstName() {

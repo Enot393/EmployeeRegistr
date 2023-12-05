@@ -1,7 +1,7 @@
-package com.employee.EmployeeRegistation.services;
+package com.employeeProject.services;
 
-import com.employee.EmployeeRegistation.Employee;
-import com.employee.EmployeeRegistation.exceptions.*;
+import com.employeeProject.entity.Employee;
+import com.employeeProject.exceptions.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -17,14 +17,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee addEmployee(String firstName, String lastName) {
+    public Employee addEmployee(String firstName, String lastName, Integer department, Double salary) {
         if (employeeBook.size() >= employeeBookLimit) {
             throw new EmployeeStorageIsFullException("StorageIsFull");
         }
         if (employeeBook.containsKey(firstName + lastName)) {
             throw new EmployeeAlreadyAddedException("EmployeeAlreadyAdded");
         } else {
-            Employee employee = new Employee(firstName, lastName);
+            Employee employee = new Employee(firstName, lastName, department, salary);
             employeeBook.put(firstName + lastName, employee);
             return employee;
         }
