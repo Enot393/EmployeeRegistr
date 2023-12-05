@@ -4,10 +4,10 @@ import com.employeeProject.entity.Employee;
 
 import java.util.List;
 
-public interface DepartmentService {
+public interface IDepartmentService {
     Employee maxSalaryOfDepartment(Integer departmentId);
 
-    Employee mimSalaryOfDepartment(Integer departmentId);
+    Employee minSalaryOfDepartment(Integer departmentId);
 
-    List<Employee> allEmployees(Integer departmentId);
+    List<Employee> getAllEmployees(Integer departmentId);
 }

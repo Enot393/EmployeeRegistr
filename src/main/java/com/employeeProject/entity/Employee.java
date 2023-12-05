@@ -6,6 +6,7 @@ public class Employee {
     private final String firstName;
     private final String lastName;
     private int departmentId;
+
     private double salary;
 
     public Employee(String firstName, String lastName, int departmentId, double salary) {
@@ -21,6 +22,14 @@ public class Employee {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public int getDepartmentId() {
+        return departmentId;
     }
 
     @Override

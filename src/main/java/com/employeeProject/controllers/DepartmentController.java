@@ -1,7 +1,7 @@
 package com.employeeProject.controllers;
 
 import com.employeeProject.entity.Employee;
-import com.employeeProject.services.DepartmentService;
+import com.employeeProject.services.IDepartmentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,25 +13,24 @@ import java.util.List;
 @RequestMapping(path = "/departments")
 public class DepartmentController {
 
-    private final DepartmentService departmentService;
+    private final IDepartmentService departmentService;
 
-    public DepartmentController(DepartmentService departmentService) {
+    public DepartmentController(IDepartmentService departmentService) {
         this.departmentService = departmentService;
     }
 
     @GetMapping(path = "/max-salary")
     public Employee maxSalaryOfDepartment(@RequestParam(value = "departmentId") Integer departmentId) {
-        return departmentService.maxSalaryOfDepartment(1);
+        return departmentService.maxSalaryOfDepartment(departmentId);
     }
 
     @GetMapping(path = "/min-salary")
     public Employee mimSalaryOfDepartment(@RequestParam(value = "departmentId") Integer departmentId) {
-        return departmentService.maxSalaryOfDepartment(1);
+        return departmentService.minSalaryOfDepartment(departmentId);
     }
 
     @GetMapping(path = "/all")
     public List<Employee> allEmployees(@RequestParam(value = "departmentId", required = false) Integer departmentId) {
-//        return departmentService.maxSalaryOfDepartment(1);
-        return null;
+        return departmentService.getAllEmployees(departmentId);
     }
 }

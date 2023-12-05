@@ -1,19 +1,21 @@
 package com.employeeProject.controllers;
 
 import com.employeeProject.entity.Employee;
-import com.employeeProject.services.EmployeeService;
+import com.employeeProject.services.IEmployeeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/employee")
 public class EmployeeController {
 
-    private final EmployeeService employeeService;
+    private final IEmployeeService employeeService;
 
-    public EmployeeController(EmployeeService employeeService) {
+    public EmployeeController(IEmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
@@ -30,7 +32,6 @@ public class EmployeeController {
                                    @RequestParam(value = "lastName") String lastName) {
         return employeeService.removeEmployee(firstName, lastName);
     }
-
 
     @GetMapping(path = "/search")
     public Employee searchEmployee(@RequestParam(value = "firstName") String firstName,
