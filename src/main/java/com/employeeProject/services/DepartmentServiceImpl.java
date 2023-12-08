@@ -9,11 +9,11 @@ import java.util.List;
 
 
 @Service
-public class DepartmentServiceImpl implements IDepartmentService {
+public class DepartmentServiceImpl implements DepartmentService {
 
-    IEmployeeService employeeService;
+    private EmployeeService employeeService;
 
-    public DepartmentServiceImpl(IEmployeeService employeeService) {
+    public DepartmentServiceImpl(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 

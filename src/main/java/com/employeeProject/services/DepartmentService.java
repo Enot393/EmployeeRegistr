@@ -4,7 +4,7 @@ import com.employeeProject.entity.Employee;
 
 import java.util.List;
 
-public interface IDepartmentService {
+public interface DepartmentService {
     Employee maxSalaryOfDepartment(Integer departmentId);
 
     Employee minSalaryOfDepartment(Integer departmentId);

@@ -1,7 +1,7 @@
 package com.employeeProject.controllers;
 
 import com.employeeProject.entity.Employee;
-import com.employeeProject.services.IDepartmentService;
+import com.employeeProject.services.DepartmentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,9 +13,9 @@ import java.util.List;
 @RequestMapping(path = "/departments")
 public class DepartmentController {
 
-    private final IDepartmentService departmentService;
+    private final DepartmentService departmentService;
 
-    public DepartmentController(IDepartmentService departmentService) {
+    public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
     }
 

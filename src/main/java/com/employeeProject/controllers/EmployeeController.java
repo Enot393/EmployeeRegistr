@@ -1,21 +1,19 @@
 package com.employeeProject.controllers;
 
 import com.employeeProject.entity.Employee;
-import com.employeeProject.services.IEmployeeService;
+import com.employeeProject.services.EmployeeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(path = "/employee")
 public class EmployeeController {
 
-    private final IEmployeeService employeeService;
+    private final EmployeeService employeeService;
 
-    public EmployeeController(IEmployeeService employeeService) {
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 

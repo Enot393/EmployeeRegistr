@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class EmployeeServiceImpl implements IEmployeeService {
+public class EmployeeServiceImpl implements EmployeeService {
 
     private Map<String, Employee> employeeBook;
     private final int employeeBookLimit = 10;
