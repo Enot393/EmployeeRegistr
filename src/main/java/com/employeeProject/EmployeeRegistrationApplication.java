@@ -1,4 +1,4 @@
-package com.employee.EmployeeRegistation;
+package com.employeeProject;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

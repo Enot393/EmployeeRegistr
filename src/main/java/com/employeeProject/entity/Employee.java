@@ -1,14 +1,19 @@
-package com.employee.EmployeeRegistation;
+package com.employeeProject.entity;
 
 import java.util.Objects;
 
 public class Employee {
-    private String firstName;
-    private String lastName;
+    private final String firstName;
+    private final String lastName;
+    private int departmentId;
 
-    public Employee(String firstName, String lastName) {
+    private double salary;
+
+    public Employee(String firstName, String lastName, int departmentId, double salary) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.departmentId = departmentId;
+        this.salary = salary;
     }
 
     public String getFirstName() {
@@ -17,6 +22,14 @@ public class Employee {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public int getDepartmentId() {
+        return departmentId;
     }
 
     @Override

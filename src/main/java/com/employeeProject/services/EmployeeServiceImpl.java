@@ -1,9 +1,11 @@
-package com.employee.EmployeeRegistation.services;
+package com.employeeProject.services;
 
-import com.employee.EmployeeRegistation.Employee;
-import com.employee.EmployeeRegistation.exceptions.*;
+import com.employeeProject.entity.Employee;
+import com.employeeProject.exceptions.*;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -17,14 +19,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee addEmployee(String firstName, String lastName) {
+    public Employee addEmployee(String firstName, String lastName, Integer department, Double salary) {
         if (employeeBook.size() >= employeeBookLimit) {
             throw new EmployeeStorageIsFullException("StorageIsFull");
         }
         if (employeeBook.containsKey(firstName + lastName)) {
             throw new EmployeeAlreadyAddedException("EmployeeAlreadyAdded");
         } else {
-            Employee employee = new Employee(firstName, lastName);
+            Employee employee = new Employee(firstName, lastName, department, salary);
             employeeBook.put(firstName + lastName, employee);
             return employee;
         }
@@ -32,7 +34,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee removeEmployee(String firstName, String lastName) {
-
         if (employeeBook.containsKey(firstName + lastName)) {
              return employeeBook.remove(firstName + lastName);
         }
@@ -45,5 +46,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             return employeeBook.get(firstName + lastName);
         }
         throw new EmployeeNotFoundException("EmployeeNotFound");
+    }
+
+    @Override
+    public List<Employee> getAllEmployees() {
+        return new ArrayList<>(employeeBook.values());
     }
 }
