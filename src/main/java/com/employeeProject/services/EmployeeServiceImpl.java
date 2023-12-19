@@ -2,12 +2,14 @@ package com.employeeProject.services;
 
 import com.employeeProject.entity.Employee;
 import com.employeeProject.exceptions.*;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static org.apache.commons.lang3.StringUtils.capitalize;
+import static org.apache.commons.lang3.StringUtils.isAlpha;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -22,8 +24,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee addEmployee(String firstName, String lastName, Integer department, Double salary) {
 
         checkInput(firstName, lastName);
-        firstName = StringUtils.capitalize(firstName);
-        lastName =  StringUtils.capitalize(lastName);
+        firstName = capitalize(firstName);
+        lastName =  capitalize(lastName);
 
         int employeeBookLimit = 10;
         if (employeeBook.size() >= employeeBookLimit) {
@@ -42,8 +44,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee removeEmployee(String firstName, String lastName) {
 
         checkInput(firstName, lastName);
-        firstName = StringUtils.capitalize(firstName);
-        lastName =  StringUtils.capitalize(lastName);
+        firstName = capitalize(firstName);
+        lastName =  capitalize(lastName);
 
         if (employeeBook.containsKey(firstName + lastName)) {
              return employeeBook.remove(firstName + lastName);
@@ -55,8 +57,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee searchEmployee(String firstName, String lastName) {
 
         checkInput(firstName, lastName);
-        firstName = StringUtils.capitalize(firstName);
-        lastName =  StringUtils.capitalize(lastName);
+        firstName = capitalize(firstName);
+        lastName =  capitalize(lastName);
 
         if (employeeBook.containsKey(firstName + lastName)) {
             return employeeBook.get(firstName + lastName);
@@ -70,7 +72,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     private void checkInput(String firstName, String lastName) {
-        if (!StringUtils.isAlpha(firstName) || !StringUtils.isAlpha(lastName)) {
+        if (!isAlpha(firstName) || !isAlpha(lastName)) {
             throw new UncorrectedInputException("Input is uncorrected");
         }
     }
