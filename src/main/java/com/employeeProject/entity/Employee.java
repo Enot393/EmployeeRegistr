@@ -9,11 +9,14 @@ public class Employee {
 
     private double salary;
 
+    // TODO: 19.12.2023 вернуть поле id и завязать все сравнения сотрудников на этом поле
+
     public Employee(String firstName, String lastName, int departmentId, double salary) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.departmentId = departmentId;
         this.salary = salary;
+        // TODO: 19.12.2023 написать бутафорскую базу данных
     }
 
     public String getFirstName() {

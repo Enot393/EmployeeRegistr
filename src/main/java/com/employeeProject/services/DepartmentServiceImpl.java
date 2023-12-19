@@ -33,6 +33,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<Employee> getAllEmployeesOfDepartment(Integer departmentId) {
+        // TODO: 19.12.2023 тут если dep==null, то кидаем ошибку "невернй номер отдела"
+        //  иначе одним методом возвращаем список с отрудниками отдела
         if (departmentId == null) {
             return employeeService.getAllEmployees();
         }
@@ -41,6 +43,11 @@ public class DepartmentServiceImpl implements DepartmentService {
                 throw new EmployeeNotFoundException("DepartmentId is uncorrected");
             }
             return employeesOfDepartment;
+    }
+
+    @Override
+    public void indexingSalaryOfDep(int department, double index) {
+
     }
 
     private List<Employee> getEmployeeList(Integer departmentId) {

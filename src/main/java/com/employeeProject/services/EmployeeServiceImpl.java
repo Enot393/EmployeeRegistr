@@ -52,4 +52,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> getAllEmployees() {
         return new ArrayList<>(employeeBook.values());
     }
+
+    @Override
+    public void changeEmployeeField(String field, String newValue) {
+
+    }
 }

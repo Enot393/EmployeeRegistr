@@ -10,4 +10,5 @@ public interface DepartmentService {
     Employee minSalaryOfDepartment(Integer departmentId);
 
     List<Employee> getAllEmployeesOfDepartment(Integer departmentId);
+    void indexingSalaryOfDep(int department, double index);
 }
