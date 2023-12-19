@@ -11,41 +11,58 @@ import java.util.Map;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private Map<String, Employee> employeeBook;
-    private final int employeeBookLimit = 10;
+    private final Map<Integer, Employee> employeeBook;
+    private final int employeeBookSizeLimit = 10;
 
-    public EmployeeServiceImpl(Map<String, Employee> employeeBook) {
+    public EmployeeServiceImpl(Map<Integer, Employee> employeeBook) {
         this.employeeBook = employeeBook;
     }
 
     @Override
     public Employee addEmployee(String firstName, String lastName, Integer department, Double salary) {
-        if (employeeBook.size() >= employeeBookLimit) {
+        if (employeeBook.size() >= employeeBookSizeLimit) {
             throw new EmployeeStorageIsFullException("StorageIsFull");
         }
-        if (employeeBook.containsKey(firstName + lastName)) {
+        // Сначала допустим, что у нас нет тезок и под одним сочетанием firstName+lastName находится только один экземпляр
+        // TODO: 19.12.2023 Реализовать возвращение коллекции сотрудников, на случай, если там имеются тезки
+        if (employeeBook.keySet().stream()
+                .anyMatch(e -> (employeeBook.get(e).getFirstName() + employeeBook.get(e).getLastName()).equals(firstName + lastName))) {
             throw new EmployeeAlreadyAddedException("EmployeeAlreadyAdded");
         } else {
             Employee employee = new Employee(firstName, lastName, department, salary);
-            employeeBook.put(firstName + lastName, employee);
-            return employee;
+            return employeeBook.put(employee.getId(), employee);
         }
+        /*if (employeeBook.containsKey(firstName + lastName)) {
+            throw new EmployeeAlreadyAddedException("EmployeeAlreadyAdded");
+        } else {
+            Employee employee = new Employee(firstName, lastName, department, salary);
+            return employeeBook.put(employee.getId(), employee);
+        }*/
     }
 
     @Override
     public Employee removeEmployee(String firstName, String lastName) {
-        if (employeeBook.containsKey(firstName + lastName)) {
+        return employeeBook.remove(employeeBook.keySet().stream()
+                .filter(e -> (employeeBook.get(e).getFirstName() + employeeBook.get(e).getLastName()).equals(firstName + lastName))
+                .findAny()
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee with these fields isn't found")));
+        /*if (employeeBook.containsKey(firstName + lastName)) {
              return employeeBook.remove(firstName + lastName);
         }
-        throw new EmployeeNotFoundException("EmployeeNotFound");
+        throw new EmployeeNotFoundException("EmployeeNotFound");*/
     }
 
     @Override
     public Employee searchEmployee(String firstName, String lastName) {
-        if (employeeBook.containsKey(firstName + lastName)) {
+        return employeeBook.get(employeeBook.keySet().stream()
+                .filter(e -> (employeeBook.get(e).getFirstName() + employeeBook.get(e).getLastName()).equals(firstName + lastName))
+                .findAny()
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee with these fields isn't found")));
+
+        /*if (employeeBook.containsKey(firstName + lastName)) {
             return employeeBook.get(firstName + lastName);
         }
-        throw new EmployeeNotFoundException("EmployeeNotFound");
+        throw new EmployeeNotFoundException("EmployeeNotFound");*/
     }
 
     @Override

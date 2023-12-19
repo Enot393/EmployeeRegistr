@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     public DepartmentServiceImpl(EmployeeService employeeService) {
         this.employeeService = employeeService;
@@ -33,8 +33,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<Employee> getAllEmployeesOfDepartment(Integer departmentId) {
-        // TODO: 19.12.2023 тут если dep==null, то кидаем ошибку "невернй номер отдела"
-        //  иначе одним методом возвращаем список с отрудниками отдела
+        // todo тут если dep==null, то кидаем ошибку "невернй номер отдела", иначе одним методом возвращаем список с отрудниками отдела
         if (departmentId == null) {
             return employeeService.getAllEmployees();
         }
