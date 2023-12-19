@@ -2,6 +2,7 @@ package com.employeeProject.services;
 
 import com.employeeProject.entity.Employee;
 import com.employeeProject.exceptions.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,8 +12,7 @@ import java.util.Map;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private Map<String, Employee> employeeBook;
-    private final int employeeBookLimit = 10;
+    private final Map<String, Employee> employeeBook;
 
     public EmployeeServiceImpl(Map<String, Employee> employeeBook) {
         this.employeeBook = employeeBook;
@@ -20,6 +20,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(String firstName, String lastName, Integer department, Double salary) {
+
+        checkInput(firstName, lastName);
+        firstName = StringUtils.capitalize(firstName);
+        lastName =  StringUtils.capitalize(lastName);
+
+        int employeeBookLimit = 10;
         if (employeeBook.size() >= employeeBookLimit) {
             throw new EmployeeStorageIsFullException("StorageIsFull");
         }
@@ -34,6 +40,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee removeEmployee(String firstName, String lastName) {
+
+        checkInput(firstName, lastName);
+        firstName = StringUtils.capitalize(firstName);
+        lastName =  StringUtils.capitalize(lastName);
+
         if (employeeBook.containsKey(firstName + lastName)) {
              return employeeBook.remove(firstName + lastName);
         }
@@ -42,6 +53,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee searchEmployee(String firstName, String lastName) {
+
+        checkInput(firstName, lastName);
+        firstName = StringUtils.capitalize(firstName);
+        lastName =  StringUtils.capitalize(lastName);
+
         if (employeeBook.containsKey(firstName + lastName)) {
             return employeeBook.get(firstName + lastName);
         }
@@ -51,5 +67,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getAllEmployees() {
         return new ArrayList<>(employeeBook.values());
+    }
+
+    private void checkInput(String firstName, String lastName) {
+        if (!StringUtils.isAlpha(firstName) || !StringUtils.isAlpha(lastName)) {
+            throw new UncorrectedInputException("Input is uncorrected");
+        }
     }
 }
