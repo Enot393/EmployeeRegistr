@@ -12,24 +12,24 @@ import java.util.Map;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final Map<Integer, Employee> employeeBook;
-    private final int employeeBookSizeLimit = 10;
 
     public EmployeeServiceImpl(Map<Integer, Employee> employeeBook) {
         this.employeeBook = employeeBook;
     }
 
     @Override
-    public Employee addEmployee(String firstName, String lastName, Integer department, Double salary) {
+    public Employee addEmployee(String fullName, Integer department, Double salary) {
+        int employeeBookSizeLimit = 10;
         if (employeeBook.size() >= employeeBookSizeLimit) {
             throw new EmployeeStorageIsFullException("StorageIsFull");
         }
         // Сначала допустим, что у нас нет тезок и под одним сочетанием firstName+lastName находится только один экземпляр
         // TODO: 19.12.2023 Реализовать возвращение коллекции сотрудников, на случай, если там имеются тезки
         if (employeeBook.keySet().stream()
-                .anyMatch(e -> (employeeBook.get(e).getFirstName() + employeeBook.get(e).getLastName()).equals(firstName + lastName))) {
+                .anyMatch(e -> (employeeBook.get(e).getFullName()).equals(fullName))) {
             throw new EmployeeAlreadyAddedException("EmployeeAlreadyAdded");
         } else {
-            Employee employee = new Employee(firstName, lastName, department, salary);
+            Employee employee = new Employee(fullName, department, salary);
             return employeeBook.put(employee.getId(), employee);
         }
         /*if (employeeBook.containsKey(firstName + lastName)) {
@@ -41,11 +41,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee removeEmployee(String firstName, String lastName) {
+    public Employee removeEmployee(String fullName) {
         return employeeBook.remove(employeeBook.keySet().stream()
-                .filter(e -> (employeeBook.get(e).getFirstName() + employeeBook.get(e).getLastName()).equals(firstName + lastName))
+                .filter(e -> (employeeBook.get(e).getFullName()).equals(fullName))
                 .findAny()
-                .orElseThrow(() -> new EmployeeNotFoundException("Employee with these fields isn't found")));
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee " + fullName + " isn't found")));
         /*if (employeeBook.containsKey(firstName + lastName)) {
              return employeeBook.remove(firstName + lastName);
         }
@@ -53,12 +53,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee searchEmployee(String firstName, String lastName) {
+    public Employee searchEmployee(String fullName) {
         return employeeBook.get(employeeBook.keySet().stream()
-                .filter(e -> (employeeBook.get(e).getFirstName() + employeeBook.get(e).getLastName()).equals(firstName + lastName))
+                .filter(e -> (employeeBook.get(e).getFullName()).equals(fullName))
                 .findAny()
-                .orElseThrow(() -> new EmployeeNotFoundException("Employee with these fields isn't found")));
-
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee " + fullName + " isn't found")));
         /*if (employeeBook.containsKey(firstName + lastName)) {
             return employeeBook.get(firstName + lastName);
         }
@@ -71,7 +70,29 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void changeEmployeeField(String field, String newValue) {
-
+    public Employee changeEmployeeFields(Integer id, String field, String newValue) {
+        // Скорее всего изменение полей будет организовано через ввод нового значения в поле ввода на сайте.
+        // Так что нет смысла валидировать имена полей, только значения
+        Employee employee = employeeBook.get(id);
+        switch (field) {
+            case "fullName" -> employee.setFullName(newValue);
+            case "departmentId" -> {
+                try {
+                    int departmentId = Integer.parseInt(field);
+                    employee.setDepartmentId(departmentId);
+                } catch (ClassCastException e) {
+                    throw new UncorrectedInputException("Uncorrected inputData " + newValue);
+                }
+            }
+            case "salary" -> {
+                try {
+                    double salary = Double.parseDouble(field);
+                    employee.setSalary(salary);
+                } catch (ClassCastException e) {
+                    throw new UncorrectedInputException("Uncorrected inputData " + newValue);
+                }
+            }
+        }
+        return employeeBook.get(id);
     }
 }

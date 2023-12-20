@@ -20,25 +20,29 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/add")
-    public Employee addEmployee(@RequestParam(value = "firstName") String firstName,
-                                @RequestParam(value = "lastName") String lastName,
+    public Employee addEmployee(@RequestParam(value = "fulltName") String fullName,
                                 @RequestParam(value = "department") Integer department,
                                 @RequestParam(value = "salary") Double salary) {
-        return employeeService.addEmployee(firstName, lastName, department, salary);
+        return employeeService.addEmployee(fullName, department, salary);
     }
 
     @GetMapping(path = "/remove")
-    public Employee removeEmployee(@RequestParam(value = "firstName") String firstName,
-                                   @RequestParam(value = "lastName") String lastName) {
-        return employeeService.removeEmployee(firstName, lastName);
+    public Employee removeEmployee(@RequestParam(value = "firstName") String fullName) {
+        return employeeService.removeEmployee(fullName);
     }
-
 
     @GetMapping(path = "/search")
-    public Employee searchEmployee(@RequestParam(value = "firstName") String firstName,
-                                   @RequestParam(value = "lastName") String lastName) {
-        return employeeService.searchEmployee(firstName, lastName);
+    public Employee searchEmployee(@RequestParam(value = "firstName") String fullName) {
+        return employeeService.searchEmployee(fullName);
     }
+
+    @GetMapping(path = "/change")
+    public Employee changeField(@RequestParam(value = "id") Integer id,
+                                @RequestParam(value = "field") String field,
+                                @RequestParam(value = "newValue") String newValue) {
+        return employeeService.changeEmployeeFields(id, field, newValue);
+    }
+
     @GetMapping(path = "/getAll")
     public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();

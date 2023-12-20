@@ -3,29 +3,26 @@ package com.employeeProject.entity;
 import java.text.NumberFormat;
 import java.util.Objects;
 
+import static org.apache.commons.lang3.StringUtils.capitalize;
+import static org.apache.commons.lang3.StringUtils.isAlpha;
+
 public class Employee {
-    private String firstName;
-    private String lastName;
+    private String fullName;
     private int departmentId;
     private double salary;
     private final Integer id;
     private static Integer counter;
 
-    public Employee(String firstName, String lastName, int departmentId, double salary) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Employee(String fullName, int departmentId, double salary) {
+        this.fullName = capitalize(fullName.toLowerCase());
         this.departmentId = departmentId;
         this.salary = salary;
         this.id = counter++;
         // TODO: 19.12.2023 написать бутафорскую базу данных
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
+    public String getFullName() {
+        return fullName;
     }
 
     public int getDepartmentId() {
@@ -40,12 +37,10 @@ public class Employee {
         return id;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+        if (isAlpha(fullName)) {
+            this.fullName = fullName;
+        }
     }
 
     public void setDepartmentId(int departmentId) {
@@ -74,6 +69,6 @@ public class Employee {
     public String toString() {
         NumberFormat nf = NumberFormat.getCurrencyInstance();
         return ("ID+%s: %s, dept.№ %s, salary %s")
-                .formatted(id, firstName + lastName, departmentId, nf.format(salary));
+                .formatted(id, fullName, departmentId, nf.format(salary));
     }
 }
