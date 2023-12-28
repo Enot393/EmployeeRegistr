@@ -3,18 +3,15 @@ package com.employeeProject.entity;
 import java.text.NumberFormat;
 import java.util.Objects;
 
-import static org.apache.commons.lang3.StringUtils.capitalize;
-import static org.apache.commons.lang3.StringUtils.isAlpha;
-
 public class Employee {
     private String fullName;
     private int departmentId;
     private double salary;
     private final Integer id;
-    private static Integer counter;
+    private static Integer counter = 0;
 
     public Employee(String fullName, int departmentId, double salary) {
-        this.fullName = capitalize(fullName.toLowerCase());
+        this.fullName = fullName;
         this.departmentId = departmentId;
         this.salary = salary;
         this.id = counter++;
@@ -38,9 +35,7 @@ public class Employee {
     }
 
     public void setFullName(String fullName) {
-        if (isAlpha(fullName)) {
-            this.fullName = fullName;
-        }
+        this.fullName = fullName;
     }
 
     public void setDepartmentId(int departmentId) {
@@ -68,7 +63,6 @@ public class Employee {
     @Override
     public String toString() {
         NumberFormat nf = NumberFormat.getCurrencyInstance();
-        return ("ID+%s: %s, dept.№ %s, salary %s")
-                .formatted(id, fullName, departmentId, nf.format(salary));
+        return ("ID+%s: %s, dept.№ %s, salary %s").formatted(id, fullName, departmentId, nf.format(salary));
     }
 }

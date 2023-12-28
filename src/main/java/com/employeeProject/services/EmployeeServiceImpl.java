@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static org.apache.commons.lang3.StringUtils.capitalize;
+import static org.apache.commons.lang3.StringUtils.isAlpha;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -15,29 +18,32 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public EmployeeServiceImpl(Map<Integer, Employee> employeeBook) {
         this.employeeBook = employeeBook;
+        Employee employee1 = new Employee("IvanIvanov", 1, 50000);
+        Employee employee2 = new Employee("IvanPetrov", 2, 60000);
+        Employee employee3 = new Employee("IvanSidorov", 1, 70000);
+
+        employeeBook.put(employee1.getId(), employee1);
+        employeeBook.put(employee2.getId(), employee2);
+        employeeBook.put(employee3.getId(), employee3);
     }
 
     @Override
-    public Employee addEmployee(String fullName, Integer department, Double salary) {
+    public Employee addEmployee(String firstName, String lastName, Integer department, Double salary) {
         int employeeBookSizeLimit = 10;
         if (employeeBook.size() >= employeeBookSizeLimit) {
             throw new EmployeeStorageIsFullException("StorageIsFull");
         }
         // Сначала допустим, что у нас нет тезок и под одним сочетанием firstName+lastName находится только один экземпляр
         // TODO: 19.12.2023 Реализовать возвращение коллекции сотрудников, на случай, если там имеются тезки
+        String fullName = validateName(firstName, lastName);
         if (employeeBook.keySet().stream()
                 .anyMatch(e -> (employeeBook.get(e).getFullName()).equals(fullName))) {
             throw new EmployeeAlreadyAddedException("EmployeeAlreadyAdded");
         } else {
             Employee employee = new Employee(fullName, department, salary);
-            return employeeBook.put(employee.getId(), employee);
+            employeeBook.put(employee.getId(), employee);
+            return employee;
         }
-        /*if (employeeBook.containsKey(firstName + lastName)) {
-            throw new EmployeeAlreadyAddedException("EmployeeAlreadyAdded");
-        } else {
-            Employee employee = new Employee(firstName, lastName, department, salary);
-            return employeeBook.put(employee.getId(), employee);
-        }*/
     }
 
     @Override
@@ -46,10 +52,6 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .filter(e -> (employeeBook.get(e).getFullName()).equals(fullName))
                 .findAny()
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee " + fullName + " isn't found")));
-        /*if (employeeBook.containsKey(firstName + lastName)) {
-             return employeeBook.remove(firstName + lastName);
-        }
-        throw new EmployeeNotFoundException("EmployeeNotFound");*/
     }
 
     @Override
@@ -58,10 +60,6 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .filter(e -> (employeeBook.get(e).getFullName()).equals(fullName))
                 .findAny()
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee " + fullName + " isn't found")));
-        /*if (employeeBook.containsKey(firstName + lastName)) {
-            return employeeBook.get(firstName + lastName);
-        }
-        throw new EmployeeNotFoundException("EmployeeNotFound");*/
     }
 
     @Override
@@ -94,5 +92,15 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
         }
         return employeeBook.get(id);
+    }
+
+    private String validateName(String firstName, String lastName) {
+        if (isAlpha(firstName)) {
+            throw new UncorrectedInputException("Uncorrected inputData " + firstName);
+        } else if (isAlpha(lastName)) {
+            throw new UncorrectedInputException("Uncorrected inputData " + lastName);
+        } else {
+            return capitalize(firstName.toLowerCase() + capitalize(lastName.toLowerCase()));
+        }
     }
 }
