@@ -1,6 +1,6 @@
-package com.employeeProject.services;
+package com.employeeproject.services;
 
-import com.employeeProject.entity.Employee;
+import com.employeeproject.entity.Employee;
 
 import java.util.List;
 

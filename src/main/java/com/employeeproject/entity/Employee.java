@@ -1,19 +1,24 @@
-package com.employeeProject.entity;
+package com.employeeproject.entity;
 
+import java.text.NumberFormat;
 import java.util.Objects;
+
 
 public class Employee {
     private final String firstName;
     private final String lastName;
     private int departmentId;
-
     private double salary;
+    private final int id;
+    private static int countId = 1;
 
     public Employee(String firstName, String lastName, int departmentId, double salary) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.departmentId = departmentId;
         this.salary = salary;
+        this.id = countId;
+        countId++;
     }
 
     public String getFirstName() {
@@ -24,29 +29,37 @@ public class Employee {
         return lastName;
     }
 
-    public double getSalary() {
-        return salary;
-    }
-
     public int getDepartmentId() {
         return departmentId;
     }
 
+    public double getSalary() {
+        return salary;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+
+    // Id - это уникальный идентификатор объекта, так что можно привязать equals и hashCode только лишь к Id
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName);
+        return id == employee.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
-        return firstName + lastName;
+        NumberFormat nf = NumberFormat.getCurrencyInstance();
+        return "Id%d: %s %s, dept: %d, salary: %s"
+                .formatted(id, firstName, lastName, departmentId, nf.format(salary));
     }
 }

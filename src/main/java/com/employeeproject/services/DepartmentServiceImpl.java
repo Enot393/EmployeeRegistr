@@ -1,7 +1,7 @@
-package com.employeeProject.services;
+package com.employeeproject.services;
 
-import com.employeeProject.entity.Employee;
-import com.employeeProject.exceptions.EmployeeNotFoundException;
+import com.employeeproject.entity.Employee;
+import com.employeeproject.exceptions.DepartmentNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -18,17 +18,19 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Employee maxSalaryOfDepartment(Integer departmentId) {
+    public Employee getMaxSalaryOfDepartment(Integer departmentId) {
         return getAllEmployeesOfDepartment(departmentId).stream()
                 .max(Comparator.comparingDouble(Employee::getSalary))
-                .orElseThrow(() -> new EmployeeNotFoundException("DepartmentId is uncorrected"));
+                .orElseThrow(() ->
+                        new DepartmentNotFoundException("DepartmentId " + departmentId + "is uncorrected", departmentId));
     }
 
     @Override
-    public Employee minSalaryOfDepartment(Integer departmentId) {
+    public Employee getMinSalaryOfDepartment(Integer departmentId) {
         return getAllEmployeesOfDepartment(departmentId).stream()
                 .min(Comparator.comparingDouble(Employee::getSalary))
-                .orElseThrow(() -> new EmployeeNotFoundException("DepartmentId is uncorrected"));
+                .orElseThrow(() ->
+                        new DepartmentNotFoundException("DepartmentId " + departmentId + "is uncorrected", departmentId));
     }
 
     @Override
@@ -36,16 +38,16 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (departmentId == null) {
             return employeeService.getAllEmployees();
         }
-         List<Employee> employeesOfDepartment = getEmployeeList(departmentId);
-            if (employeesOfDepartment.isEmpty()) {
-                throw new EmployeeNotFoundException("DepartmentId is uncorrected");
-            }
-            return employeesOfDepartment;
+        List<Employee> employeesOfDepartment = getEmployeeList(departmentId);
+        if (employeesOfDepartment.isEmpty()) {
+            throw new DepartmentNotFoundException("DepartmentId " + departmentId + "is uncorrected", departmentId);
+        }
+        return employeesOfDepartment;
     }
 
     private List<Employee> getEmployeeList(Integer departmentId) {
         return employeeService.getAllEmployees().stream()
-                    .filter(e -> e.getDepartmentId() == departmentId)
-                    .toList();
+                .filter(e -> e.getDepartmentId() == departmentId)
+                .toList();
     }
 }

@@ -1,7 +1,7 @@
-package com.employeeProject.controllers;
+package com.employeeproject.controllers;
 
-import com.employeeProject.entity.Employee;
-import com.employeeProject.services.DepartmentService;
+import com.employeeproject.entity.Employee;
+import com.employeeproject.services.DepartmentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,12 +21,12 @@ public class DepartmentController {
 
     @GetMapping(path = "/max-salary")
     public Employee maxSalaryOfDepartment(@RequestParam(value = "departmentId", required = false) Integer departmentId) {
-        return departmentService.maxSalaryOfDepartment(departmentId);
+        return departmentService.getMaxSalaryOfDepartment(departmentId);
     }
 
     @GetMapping(path = "/min-salary")
     public Employee mimSalaryOfDepartment(@RequestParam(value = "departmentId", required = false) Integer departmentId) {
-        return departmentService.minSalaryOfDepartment(departmentId);
+        return departmentService.getMinSalaryOfDepartment(departmentId);
     }
 
     @GetMapping(path = "/all")

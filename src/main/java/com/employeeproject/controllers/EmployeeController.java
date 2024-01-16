@@ -1,11 +1,9 @@
-package com.employeeProject.controllers;
+package com.employeeproject.controllers;
 
-import com.employeeProject.entity.Employee;
-import com.employeeProject.services.EmployeeService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.employeeproject.entity.Employee;
+import com.employeeproject.exceptions.*;
+import com.employeeproject.services.EmployeeService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/employee")
@@ -31,10 +29,14 @@ public class EmployeeController {
         return employeeService.removeEmployee(firstName, lastName);
     }
 
-
     @GetMapping(path = "/search")
     public Employee searchEmployee(@RequestParam(value = "firstName") String firstName,
                                    @RequestParam(value = "lastName") String lastName) {
         return employeeService.searchEmployee(firstName, lastName);
+    }
+
+    @ExceptionHandler(EmployeeProjectException.class)
+    public String handleExceptionsOfProject(EmployeeProjectException e) {
+        return e.getOutputMessage();
     }
 }
