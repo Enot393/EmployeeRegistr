@@ -4,50 +4,62 @@ import com.employeeproject.entity.Employee;
 import com.employeeproject.exceptions.DepartmentNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
+    private NumberFormat nf = NumberFormat.getCurrencyInstance();
 
     public DepartmentServiceImpl(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     @Override
-    public Employee getMaxSalaryOfDepartment(Integer departmentId) {
-        return getAllEmployeesOfDepartment(departmentId).stream()
-                .max(Comparator.comparingDouble(Employee::getSalary))
-                .orElseThrow(() ->
-                        new DepartmentNotFoundException("DepartmentId " + departmentId + "is uncorrected", departmentId));
+    public String getMaxSalaryOfDepartment(Integer departmentId) {
+        return nf.format(getEmployeesOfDepartment(departmentId).stream()
+                .mapToDouble(Employee::getSalary)
+                .max().orElseThrow(() ->
+                        new DepartmentNotFoundException("DepartmentId " + departmentId + "is uncorrected", departmentId)));
     }
 
     @Override
-    public Employee getMinSalaryOfDepartment(Integer departmentId) {
-        return getAllEmployeesOfDepartment(departmentId).stream()
-                .min(Comparator.comparingDouble(Employee::getSalary))
-                .orElseThrow(() ->
-                        new DepartmentNotFoundException("DepartmentId " + departmentId + "is uncorrected", departmentId));
+    public String getMinSalaryOfDepartment(Integer departmentId) {
+        return nf.format(getEmployeesOfDepartment(departmentId).stream()
+                .mapToDouble(Employee::getSalary)
+                .min().orElseThrow(() ->
+                        new DepartmentNotFoundException("DepartmentId " + departmentId + "is uncorrected", departmentId)));
     }
 
     @Override
-    public List<Employee> getAllEmployeesOfDepartment(Integer departmentId) {
-        if (departmentId == null) {
-            return employeeService.getAllEmployees();
-        }
-        List<Employee> employeesOfDepartment = getEmployeeList(departmentId);
+    public String getSumOfSalaryOfDepartment(Integer departmentId) {
+        return nf.format(getEmployeesOfDepartment(departmentId).stream()
+                .mapToDouble(Employee::getSalary)
+                .sum());
+    }
+
+    @Override
+    public List<Employee> getEmployeesOfDepartment(Integer departmentId) {
+
+        List<Employee> employeesOfDepartment = employeeService.getAllEmployees().stream()
+                .filter(e -> e.getDepartmentId() == departmentId)
+                .toList();
+
         if (employeesOfDepartment.isEmpty()) {
             throw new DepartmentNotFoundException("DepartmentId " + departmentId + "is uncorrected", departmentId);
         }
         return employeesOfDepartment;
     }
 
-    private List<Employee> getEmployeeList(Integer departmentId) {
-        return employeeService.getAllEmployees().stream()
-                .filter(e -> e.getDepartmentId() == departmentId)
-                .toList();
+    @Override
+    public Map<Integer, List<Employee>> getEmployeesWithGrouping() {
+            return employeeService.getAllEmployees().stream()
+                    .collect(Collectors.groupingBy(
+                            Employee::getDepartmentId, Collectors.toList()));
     }
 }
