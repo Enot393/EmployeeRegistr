@@ -1,4 +1,4 @@
-package com.employeeproject.exceptions;
+package com.employeeproject.exceptions.employeeexceptions;
 
 import com.employeeproject.entity.Employee;
 import org.springframework.http.HttpStatus;

@@ -1,10 +1,10 @@
 package com.employeeproject.services;
 
 import com.employeeproject.entity.Employee;
-import com.employeeproject.exceptions.EmployeeAlreadyAddedException;
-import com.employeeproject.exceptions.EmployeeNotFoundException;
-import com.employeeproject.exceptions.EmployeeStorageIsFullException;
-import com.employeeproject.exceptions.UncorrectedInputException;
+import com.employeeproject.exceptions.employeeexceptions.EmployeeAlreadyAddedException;
+import com.employeeproject.exceptions.employeeexceptions.EmployeeNotFoundException;
+import com.employeeproject.exceptions.employeeexceptions.EmployeeStorageIsFullException;
+import com.employeeproject.exceptions.employeeexceptions.UncorrectedInputNameException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +54,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new EmployeeNotFoundException
                     ("Employee named \"" + fullName + "\" isn't found", fullName);
         } else {
-            return employeeBook.remove(firstName + lastName);
+            return employeeBook.remove(fullName);
         }
     }
 
@@ -62,13 +62,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee searchEmployee(String firstName, String lastName) {
 
         String fullName = validateInputName(firstName) + " " + validateInputName(lastName);
-        Employee employee = employeeBook.get(firstName + lastName);
+        Employee employee = employeeBook.get(fullName);
 
         if (employee == null) {
             throw new EmployeeNotFoundException
                     ("Employee named \"" + fullName + "\" isn't found", fullName);
         } else {
-            return employeeBook.get(firstName + lastName);
+            return employee;
         }
     }
 
@@ -79,7 +79,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private String validateInputName(String name) {
         if (!StringUtils.isAlpha(name)) {
-            throw new UncorrectedInputException("Uncorrected input: ", name);
+            throw new UncorrectedInputNameException("Uncorrected input: ", name);
         }
         return capitalize(name.toLowerCase());
     }

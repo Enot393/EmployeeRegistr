@@ -1,14 +1,14 @@
 package com.employeeproject.exceptions;
 
-public class DepartmentNotFoundException extends EmployeeProjectException {
+public class DepartmentNotFoundException extends RuntimeException {
 
     private final int departmentId;
+
     public DepartmentNotFoundException(String message, int departmentId) {
         super(message);
         this.departmentId = departmentId;
     }
 
-    @Override
     public String getOutputMessage() {
         return """
                 <h2>Oops!</h2>

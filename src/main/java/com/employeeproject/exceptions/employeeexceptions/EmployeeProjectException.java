@@ -1,4 +1,4 @@
-package com.employeeproject.exceptions;
+package com.employeeproject.exceptions.employeeexceptions;
 
 public abstract class EmployeeProjectException extends RuntimeException {
 

@@ -1,13 +1,13 @@
-package com.employeeproject.exceptions;
+package com.employeeproject.exceptions.employeeexceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class UncorrectedInputException extends EmployeeProjectException {
+public class UncorrectedInputNameException extends EmployeeProjectException {
 
     private final String name;
-    public UncorrectedInputException(String massage, String name) {
+    public UncorrectedInputNameException(String massage, String name) {
         super(massage);
         this.name = name;
     }
