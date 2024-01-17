@@ -3,7 +3,7 @@ package com.employeeproject.services;
 import com.employeeproject.entity.Employee;
 import com.employeeproject.exceptions.employeeexceptions.EmployeeAlreadyAddedException;
 import com.employeeproject.exceptions.employeeexceptions.EmployeeNotFoundException;
-import com.employeeproject.exceptions.employeeexceptions.EmployeeStorageIsFullException;
+import com.employeeproject.exceptions.employeeexceptions.StorageIsFullException;
 import com.employeeproject.exceptions.employeeexceptions.UncorrectedInputNameException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee addEmployee(String firstName, String lastName, Integer department, Double salary) {
 
         if (employeeBook.size() >= employeeBookLimit) {
-            throw new EmployeeStorageIsFullException("Storage is full");
+            throw new StorageIsFullException("Storage is full");
         }
 
         firstName = validateInputName(firstName);
@@ -37,39 +37,29 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         if (employee != null) {
             throw new EmployeeAlreadyAddedException("Employee already added: " + employee, employee);
-        } else {
-            Employee newEmployee = new Employee(firstName, lastName, department, salary);
-            employeeBook.put(firstName + lastName, newEmployee);
-            return newEmployee;
         }
-    }
 
-    @Override
-    public Employee removeEmployee(String firstName, String lastName) {
-
-        String fullName = validateInputName(firstName) + " " + validateInputName(lastName);
-        Employee employee = employeeBook.get(fullName);
-
-        if (employee == null) {
-            throw new EmployeeNotFoundException
-                    ("Employee named \"" + fullName + "\" isn't found", fullName);
-        } else {
-            return employeeBook.remove(fullName);
-        }
+        Employee newEmployee = new Employee(firstName, lastName, department, salary);
+        employeeBook.put(firstName + lastName, newEmployee);
+        return newEmployee;
     }
 
     @Override
     public Employee searchEmployee(String firstName, String lastName) {
 
-        String fullName = validateInputName(firstName) + " " + validateInputName(lastName);
+        String fullName = validateInputName(firstName) + validateInputName(lastName);
         Employee employee = employeeBook.get(fullName);
 
         if (employee == null) {
-            throw new EmployeeNotFoundException
-                    ("Employee named \"" + fullName + "\" isn't found", fullName);
+            throw new EmployeeNotFoundException("Employee named \"" + fullName + "\" isn't found", fullName);
         } else {
             return employee;
         }
+    }
+
+    @Override
+    public Employee removeEmployee(String firstName, String lastName) {
+        return employeeBook.remove(searchEmployee(firstName, lastName).getFullName());
     }
 
     @Override

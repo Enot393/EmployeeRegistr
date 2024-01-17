@@ -3,6 +3,8 @@ package com.employeeproject.entity;
 import java.text.NumberFormat;
 import java.util.Objects;
 
+import static org.apache.commons.lang3.StringUtils.capitalize;
+
 
 public class Employee {
     private final String firstName;
@@ -13,8 +15,8 @@ public class Employee {
     private static int countId = 1;
 
     public Employee(String firstName, String lastName, int departmentId, double salary) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstName = capitalize(firstName.toLowerCase());
+        this.lastName = capitalize(lastName.toLowerCase());
         this.departmentId = departmentId;
         this.salary = salary;
         this.id = countId;
@@ -36,9 +38,8 @@ public class Employee {
     public double getSalary() {
         return salary;
     }
-
-    public int getId() {
-        return id;
+    public String getFullName() {
+        return firstName + lastName;
     }
 
 

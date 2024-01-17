@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class DepartmentServiceImpl implements DepartmentService {
 
     private final EmployeeService employeeService;
-    private NumberFormat nf = NumberFormat.getCurrencyInstance();
+    private final NumberFormat nf = NumberFormat.getCurrencyInstance();
 
     public DepartmentServiceImpl(EmployeeService employeeService) {
         this.employeeService = employeeService;
