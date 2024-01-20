@@ -18,7 +18,7 @@ public class EmployeeNotFoundException extends EmployeeProjectException {
                 <h2>Oops!</h2>
                 <br>
                 <b>Employees with name</b><br><br>
-                 %s<br><br>
+                %s<br><br>
                 <b>does not exist!</b>
                 """.formatted(name);
     }

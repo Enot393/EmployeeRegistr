@@ -18,7 +18,7 @@ public class UncorrectedInputNameException extends EmployeeProjectException {
                 <h2>Oops!</h2>
                 <br>
                 <b>You make a mistake in same namefield of employee! Your name:</b><br><br>
-                 %s
+                %s
                 """.formatted(name);
     }
 }

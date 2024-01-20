@@ -20,7 +20,7 @@ public class EmployeeAlreadyAddedException extends EmployeeProjectException {
                 <h2>Oops!</h2>
                 <br>
                 <b>Employee</b><br><br>
-                 %s<br><br>
+                %s<br><br>
                 <b>already added!</b>
                 """.formatted(employee);
     }

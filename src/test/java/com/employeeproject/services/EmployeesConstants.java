@@ -5,7 +5,7 @@ import com.employeeproject.entity.Employee;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Constants {
+public class EmployeesConstants {
 
     protected static final List<Employee> ALL_EMPLOYEES_TEST_LIST = new ArrayList<>(List.of(
             new Employee("Ivan", "Ivanov", 1, 10000.0),

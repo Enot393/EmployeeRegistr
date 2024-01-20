@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static com.employeeproject.services.Constants.*;
+import static com.employeeproject.services.EmployeesConstants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -28,10 +28,10 @@ import static org.mockito.Mockito.*;
 public class DepartmentServiceTest {
 
     @Mock
-    EmployeeService employeeServiceMock;
-    NumberFormat nf = NumberFormat.getCurrencyInstance();
+    private EmployeeService employeeServiceMock;
+    private final NumberFormat nf = NumberFormat.getCurrencyInstance();
     @InjectMocks
-    DepartmentServiceImpl out;
+    private DepartmentServiceImpl out;
 
     @BeforeEach
     public void initMock() {
