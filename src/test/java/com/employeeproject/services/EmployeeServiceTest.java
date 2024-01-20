@@ -44,12 +44,9 @@ public class EmployeeServiceTest {
         int employeeBookSizeAfterAdding = employeeBook.size();
 
         // assertion
-        assertNotEquals(employeeBookSizeBeforeAdding, employeeBookSizeAfterAdding);
+        assertEquals(employeeBookSizeBeforeAdding, employeeBookSizeAfterAdding - 1);
         assertNotEquals(null, actualEmployee);
-        assertEquals(expectedEmployee.getFirstName(), actualEmployee.getFirstName());
-        assertEquals(expectedEmployee.getLastName(), actualEmployee.getLastName());
-        assertEquals(expectedEmployee.getDepartmentId(), actualEmployee.getSalary());
-        assertEquals(expectedEmployee.getSalary(), actualEmployee.getSalary());
+        assertTrue(expectedEmployee.equalsIgnoreId(actualEmployee));
     }
 
     public static Stream<Arguments> provide_negative_params_for_tests() {
@@ -106,12 +103,9 @@ public class EmployeeServiceTest {
         int employeeBookSizeAfterRemoving = employeeBook.size();
 
         // assertion
-        assertNotEquals(employeeBookSizeBeforeRemoving, employeeBookSizeAfterRemoving);
+        assertEquals(employeeBookSizeBeforeRemoving, employeeBookSizeAfterRemoving + 1);
         assertNotEquals(null, actualEmployee);
-        assertEquals(expectedEmployee.getFirstName(), actualEmployee.getFirstName());
-        assertEquals(expectedEmployee.getLastName(), actualEmployee.getLastName());
-        assertEquals(expectedEmployee.getDepartmentId(), actualEmployee.getSalary());
-        assertEquals(expectedEmployee.getSalary(), actualEmployee.getSalary());
+        assertTrue(expectedEmployee.equalsIgnoreId(actualEmployee));
     }
 
     @Test

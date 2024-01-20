@@ -42,7 +42,6 @@ public class Employee {
         return firstName + lastName;
     }
 
-
     // Id - это уникальный идентификатор объекта, так что можно привязать equals и hashCode только лишь к Id
     @Override
     public boolean equals(Object o) {
@@ -55,6 +54,15 @@ public class Employee {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    // Этот метод нужен, чтобы можно было корректно сравнивать объекты Employee без привязки к Id,
+    // ведь на практике двух равных по equals объектов типа Employee не существует
+    public boolean equalsIgnoreId(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return departmentId == employee.departmentId && Double.compare(employee.salary, salary) == 0 && firstName.equals(employee.firstName) && lastName.equals(employee.lastName);
     }
 
     @Override

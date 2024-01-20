@@ -36,7 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = employeeBook.get(firstName + lastName);
 
         if (employee != null) {
-            throw new EmployeeAlreadyAddedException("Employee already added: " + employee, employee);
+            throw new EmployeeAlreadyAddedException("Employee named \"" + employee + "\" already added", employee);
         }
 
         Employee newEmployee = new Employee(firstName, lastName, department, salary);
