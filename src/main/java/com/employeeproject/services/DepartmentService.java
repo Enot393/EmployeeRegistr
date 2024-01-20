@@ -14,5 +14,5 @@ public interface DepartmentService {
 
     List<Employee> getEmployeesOfDepartment(Integer departmentId);
 
-    Map<Integer, List<Employee>> getEmployeesWithGrouping();
+    Map<Integer, List<Employee>> getAllEmployeesWithGrouping();
 }

@@ -39,8 +39,8 @@ public class DepartmentController {
     }
 
     @GetMapping(path = "/employees")
-    public Map<Integer, List<Employee>> allEmployeesWithGrouping() {
-        return departmentService.getEmployeesWithGrouping();
+    public Map<Integer, List<Employee>> getAllEmployeesWithGrouping() {
+        return departmentService.getAllEmployeesWithGrouping();
     }
 
     @ExceptionHandler(DepartmentNotFoundException.class)

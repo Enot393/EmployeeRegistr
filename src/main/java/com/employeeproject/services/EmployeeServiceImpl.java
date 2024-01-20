@@ -52,9 +52,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         if (employee == null) {
             throw new EmployeeNotFoundException("Employee named \"" + fullName + "\" isn't found", fullName);
-        } else {
-            return employee;
         }
+        return employee;
     }
 
     @Override

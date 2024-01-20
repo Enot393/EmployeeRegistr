@@ -28,8 +28,7 @@ public class EmployeeServiceTest {
                 Arguments.of("ivan", "ivanov", 1, 1.0),
                 Arguments.of("iVaN", "iVaNoV", 1, 1.0),
                 Arguments.of("IVAN", "IVANOV", 1, 1.0),
-                Arguments.of("pYfBmlItEDvJo", "PuRcMLurVjGBhoJn", 1, 1.0)
-        );
+                Arguments.of("pYfBmlItEDvJo", "PuRcMLurVjGBhoJn", 1, 1.0));
     }
 
     @ParameterizedTest
@@ -61,8 +60,7 @@ public class EmployeeServiceTest {
                 Arguments.of("", "Ivanov", 1, 1.0),
                 Arguments.of("Ivan", "", 1, 1.0),
                 Arguments.of("   ", "Ivanov", 1, 1.0),
-                Arguments.of("Ivan", "   ", 1, 1.0)
-        );
+                Arguments.of("Ivan", "   ", 1, 1.0));
     }
 
     @ParameterizedTest
@@ -147,7 +145,6 @@ public class EmployeeServiceTest {
 
     @Test
     public void should_exception_at_searching_employee_with_another_names() {
-
         // given
         out.addEmployee("Ivan", "Ivanov", 1, 1.0);
 
