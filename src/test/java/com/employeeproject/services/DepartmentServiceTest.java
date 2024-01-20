@@ -14,7 +14,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static com.employeeproject.services.Constants.*;
@@ -38,7 +40,7 @@ public class DepartmentServiceTest {
 
     @AfterEach
     public void countCallGetAllEmployees() {
-        verify(employeeServiceMock,only()).getAllEmployees();
+        verify(employeeServiceMock, only()).getAllEmployees();
     }
 
     public static Stream<Arguments> provide_departments_params() {
@@ -128,4 +130,21 @@ public class DepartmentServiceTest {
         assertThrows(DepartmentNotFoundException.class,
                 () -> out.getSumOfSalaryOfDepartment(-1));
     }
+
+    @Test
+    public void get_all_employees_with_grouping_test() {
+        // given
+        Map<Integer, List<Employee>> expectedMapOfEmployeeWithGrouping = new HashMap<>(Map.of(
+                1, EMPLOYEES_OF_FIRST_DEPARTMENT,
+                2, EMPLOYEES_OF_SECOND_DEPARTMENT,
+                3, EMPLOYEES_OF_THIRD_DEPARTMENT,
+                4, EMPLOYEES_OF_FOURTH_DEPARTMENT
+        ));
+        // invoking
+        Map<Integer, List<Employee>> actualMapOfEmployeeWithGrouping = out.getAllEmployeesWithGrouping();
+
+        // assertion
+        assertEquals(expectedMapOfEmployeeWithGrouping, actualMapOfEmployeeWithGrouping);
+    }
+
 }
